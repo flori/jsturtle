@@ -17,10 +17,10 @@ function initCanvas(canvasId, bgcolor, pcolor) {
   Turtle.ctx = canvas.getContext("2d");
 
   if (!bgcolor) bgcolor = 'black';
-  setbg(bgcolor);
+  setBackground(bgcolor);
 
   if (!pcolor) pcolor = 'white';
-  setpc(pcolor);
+  setPenColor(pcolor);
 
   return true;
 }
@@ -37,23 +37,25 @@ function clearScreen() {
 }
 var cs = clearScreen;
 
-function penup() {
+function penUp() {
   Turtle.drawing = false;
 }
-var pu = penup;
+var pu = penUp;
 
-function pendown() {
+function penDown() {
   Turtle.drawing = true;
 }
-var pd = pendown;
+var pd = penDown;
 
-function setpc(color) {
+function setPenColor(color) {
   Turtle.ctx.strokeStyle = color;
 }
+setpc = setPenColor;
 
-function setbg(color) {
+function setBackground(color) {
   Turtle.canvas.style.background = color;
 }
+setbg = setBackground;
 
 function forward(length) {
   var x = length * Math.cos(Turtle.angleAsRad());
