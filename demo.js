@@ -46,10 +46,8 @@ function stupidPolygonStar() {
 }
 
 function draw() {
-  var screenTurtle = new Turtle('canvas');
-  var t = new Turtle('turtleCanvas');
-  t.createTurtle(screenTurtle);
-  screenTurtle.injectCommands(self);
+  var t = new TurtleGraphics('canvas', 'turtleCanvas');
+  t.injectCommands(self);
   shapes();
   //stupidPolygonStar();
   //stupidPolygon();

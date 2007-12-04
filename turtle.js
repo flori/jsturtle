@@ -1,6 +1,6 @@
-function Turtle(canvasId, bgcolor, pcolor) {
+function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
   /*
-   * Turtle state
+   * TurtleGraphics state
    */
 
   var that = this;
@@ -78,13 +78,14 @@ function Turtle(canvasId, bgcolor, pcolor) {
   };
 
   that.drawTurtle = function() {
-    that.forward(5);
-    that.right(150);
-    that.forward(10);
-    that.right(120);
-    that.forward(10);
-    that.right(120);
-    that.forward(10);
+    that.forward(that.canvas.width / 2);
+    that.rotate(150);
+    var l = Math.ceil(Math.sqrt(that.canvas.width * that.canvas.width + that.canvas.height * that.canvas.height));
+    that.forward(l / 2);
+    that.rotate(120);
+    that.forward(l / 2);
+    that.rotate(120);
+    that.forward(l / 2);
   };
 
   that.moveTurtle = function(screenTurtle) {
@@ -181,7 +182,7 @@ function Turtle(canvasId, bgcolor, pcolor) {
 
   commands.setPenSize = function(sizes) { };
 
-  commands.forward = function (length) {
+  commands.forward = function(length) {
     var x = length * Math.cos(that.angleAsRad());
     var y = length * Math.sin(that.angleAsRad());
     that.moveTo(x, y);
@@ -216,7 +217,7 @@ function Turtle(canvasId, bgcolor, pcolor) {
     that.ctx.beginPath();
     that.ctx.arc(that.posX, that.posY, radius, startAngle, endAngle, startAngle > endAngle);
     that.ctx.stroke();
-    right(angle);
+    rotate(angle);
     forward(radius);
     that.drawing = oldDrawing;
   };
@@ -250,14 +251,14 @@ function Turtle(canvasId, bgcolor, pcolor) {
   };
 
   commands.towards = function(endPos) {
-    var startPos = pos();
+    var startPos = that.pos();
     var dx = endPos[0] - startPos[0];
     var dy = endPos[1] - startPos[1];
     return that.rad2deg(Math.atan2(dy, dx));
   };
 
   commands.distance = function(endPos) {
-    var startPos = pos();
+    var startPos = that.pos();
     var dx = endPos[0] - startPos[0];
     var dy = endPos[1] - startPos[1];
     return Math.sqrt(dx * dx + dy * dy);
@@ -319,7 +320,7 @@ function Turtle(canvasId, bgcolor, pcolor) {
   that.injectCommands(this);
 
   var canvas = document.getElementById(canvasId);
-  if (!canvas.getContext) throw("need a canvas for id = '" + canvasId + "'");
+  if (!canvas || !canvas.getContext) throw("need a canvas for id = '" + canvasId + "'");
   that.canvas = canvas;
   that.ctx = canvas.getContext("2d");
 
@@ -330,4 +331,9 @@ function Turtle(canvasId, bgcolor, pcolor) {
   that.setPenColor(pcolor);
 
   that.clearScreen();
+
+  if (turtleCanvasId) {
+    var turtle = new TurtleGraphics(turtleCanvasId, null, pcolor, bgcolor);
+    turtle.createTurtle(that);
+  }
 }
