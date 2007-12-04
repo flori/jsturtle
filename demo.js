@@ -6,13 +6,6 @@ function regPoly(edges, size) {
   });
 }
 
-function print() {
-  if (!console) return;
-  for (var i = 0; i < arguments.length; i++) {
-    console.log(arguments[i]);
-  }
-}
-
 function shapes() {
   var size = 10;
   var step = 10;
@@ -38,7 +31,7 @@ function draw() {
   fd(100); rt(100);
   fd(100); rt(100);
   fd(100); 
-  print(towards([320, 200]));
+  Turtle.createTurtle();
   setH(towards([320, 200]));
   fd(distance([320, 200]));
 }

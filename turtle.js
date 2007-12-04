@@ -7,7 +7,6 @@ var Turtle = {
   angle:    0,
   posX:     0,
   posY:     0,
-  canvasId: null,
   canvas:   null,
   ctx:      null
 };
@@ -45,12 +44,14 @@ Turtle.prepareColor = function(color) {
   return color;
 };
 
-Turtle.init = function(canvasId, bgcolor, pcolor) {
+Turtle.init = function(canvasId, turtleCanvasId, bgcolor, pcolor) {
   var canvas = document.getElementById(canvasId);
-  if (!canvas.getContext) return;
-  Turtle.canvasId = canvasId;
+  var turtleCanvas = document.getElementById(turtleCanvasId);
+  if (!canvas.getContext || !turtleCanvas.getContext) return;
   Turtle.canvas = canvas;
+  Turtle.turtleCanvas = turtleCanvas;
   Turtle.ctx = canvas.getContext("2d");
+  Turtle.turtleCtx = turtleCanvas.getContext("2d");
 
   if (!bgcolor) bgcolor = 'black';
   setBackground(bgcolor);
@@ -79,6 +80,22 @@ Turtle.rotate = function(addAngle) {
   Turtle.angle %= 360;
   if (Turtle.angle < 0) Turtle.angle += 360;
 };
+
+Turtle.createTurtle = function() {
+  Turtle.turtleCanvas.style.position = 'absolute';
+  Turtle.turtleCanvas.style.left = (Turtle.canvas.offsetLeft + 320 - Turtle.turtleCanvas.width) + 'px';
+  Turtle.turtleCanvas.style.top = (200 + Turtle.canvas.offsetTop - Turtle.turtleCanvas.height / 2) + 'px';
+  Turtle.turtleCanvas.style.visibility = 'visible';
+  Turtle.turtleCanvas.style.zIndex = '1';
+  Turtle.turtleCtx.strokeStyle = 'red';
+  Turtle.turtleCtx.beginPath();
+  Turtle.turtleCtx.moveTo(0,0);
+  Turtle.turtleCtx.lineTo(0,10);
+  Turtle.turtleCtx.lineTo(10,5);
+  Turtle.turtleCtx.lineTo(0,0);
+  Turtle.turtleCtx.stroke();
+  Turtle.turtleCtx.rotate(30);
+}
 
 /*
  * Commands
@@ -256,4 +273,11 @@ function repeat(n, block) {
 function forever(block) {
   var i = 0;
   for (;; i++) block(i);
+}
+
+function print() {
+  if (!console) return;
+  for (var i = 0; i < arguments.length; i++) {
+    console.log(arguments[i]);
+  }
 }

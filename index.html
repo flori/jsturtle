@@ -4,7 +4,10 @@
     <script type="text/javascript" src="turtle.js">
     <script type="text/javascript" src="demo.js">
   </head>
-  <body onload="Turtle.init('canvas'); draw();">
-    <canvas id="canvas" width="640" height="400"></canvas>
+  <body onload="Turtle.init('canvas', 'turtleCanvas'); draw();">
+    <div id="turtleFrame">
+      <canvas id="canvas" width="640" height="400"></canvas>
+      <canvas id="turtleCanvas" width="10" height="10" style="visibility: hidden;"></canvas>
+    </div>
   </body>
 </html>
