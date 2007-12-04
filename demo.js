@@ -31,8 +31,8 @@ function stupidPolygon() {
   fd(100); rt(100);
   fd(100); rt(100);
   fd(100); 
-  setH(towards(startPos));
-  fd(distance(startPos));
+  //setH(towards(startPos));
+  //fd(distance(startPos));
   setH(startHeading);
 }
 
@@ -45,9 +45,12 @@ function stupidPolygonStar() {
 }
 
 function draw() {
-  var t = new Turtle('canvas');
-  t.injectCommands(self);
+  var screenTurtle = new Turtle('canvas');
+  var t = new Turtle('turtleCanvas');
+  t.createTurtle(screenTurtle);
+  screenTurtle.injectCommands(self);
   setBackground('#020');
-  shapes();
+  //shapes();
   //stupidPolygonStar();
+  stupidPolygon();
 }

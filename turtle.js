@@ -5,6 +5,7 @@
 function Turtle(canvasId, bgcolor, pcolor) {
   var that = this;
   that.drawing = false;
+  that.hidden = false;
   that.angle = 0;
   that.posX = 0;
   that.posY = 0;
@@ -57,9 +58,50 @@ function Turtle(canvasId, bgcolor, pcolor) {
     that.angle += addAngle;
     that.angle %= 360;
     if (that.angle < 0) that.angle += 360;
+    if (that.turtleTurtle) that.turtleTurtle.rotateTurtle(that);
   };
 
-  commands = that.commands = {};
+  that.createTurtle = function(screenTurtle) {
+    screenTurtle.turtleTurtle = that;
+    that.canvas.style.position = 'absolute';
+    that.canvas.style.visibility = 'visible';
+    that.canvas.style.backgroundColor = 'transparent';
+    that.canvas.style.zIndex = '1';
+    that.setPenColor('red');
+    that.drawTurtle();
+    that.moveTurtle(screenTurtle);
+  };
+
+  that.drawTurtle = function() {
+    that.penUp();
+    that.forward(5);
+    that.penDown();
+    that.right(150);
+    that.forward(10);
+    that.right(120);
+    that.forward(10);
+    that.right(120);
+    that.forward(10);
+  };
+
+  that.moveTurtle = function(screenTurtle) {
+    var pos = screenTurtle.pos();
+    that.canvas.style.left = (screenTurtle.canvas.offsetLeft + pos[0] - that.canvas.width / 2) + 'px';
+    that.canvas.style.top = (pos[1] + screenTurtle.canvas.offsetTop - that.canvas.height / 2) + 'px';
+  };
+
+  that.rotateTurtle = function(screenTurtle) {
+    var angle = screenTurtle.heading();
+    that.clearScreen();
+    that.setH(angle);
+    that.drawTurtle();
+  };
+
+  /*
+   * Public commands
+   */
+
+  var commands = that.commands = {};
 
   commands.clean = function() {
     that.ctx.clearRect(0, 0, that.canvas.width, that.canvas.height);
@@ -67,16 +109,35 @@ function Turtle(canvasId, bgcolor, pcolor) {
 
   commands.clearScreen = function() {
     that.ctx.clearRect(0, 0, that.canvas.width, that.canvas.height);
-    that.posX = that.canvas.width / 2;
-    that.posY = that.canvas.height / 2;
+    that.setPos(that.centrePos());
     that.angle = 0;
     that.drawing = true;
+    if (that.turtleTurtle) {
+      that.turtleTurtle.rotateTurtle(that);
+      that.turtleTurtle.moveTurtle(that);
+    }
   };
   commands.cs = commands.clearScreen;
 
   // wrap, window, fence
 
   // fill
+
+  commands.showTurtle = function() {
+    if (!that.turtleTurtle) return;
+    that.turtleTurtle.canvas.style.zIndex = 1;
+    that.hidden = true;
+    that.turtleTurtle.rotateTurtle(that);
+    that.turtleTurtle.moveTurtle(that);
+  }
+  commands.st = commands.showTurtle;
+
+  commands.hideTurtle = function() {
+    if (!that.turtleTurtle) return;
+    that.turtleTurtle.canvas.style.zIndex = -1;
+    that.hidden = false;
+  }
+  commands.ht = commands.hideTurtle;
 
   commands.penUp = function() {
     that.drawing = false;
@@ -117,6 +178,7 @@ function Turtle(canvasId, bgcolor, pcolor) {
     var x = length * Math.cos(that.angleAsRad());
     var y = length * Math.sin(that.angleAsRad());
     that.moveTo(x, y);
+    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
   };
   commands.fd = commands.forward;
 
@@ -124,6 +186,7 @@ function Turtle(canvasId, bgcolor, pcolor) {
     var x = length * Math.cos(that.angleAsRad() - Math.PI);
     var y = length * Math.sin(that.angleAsRad() - Math.PI);
     that.moveTo(x, y);
+    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
   };
   commands.bk = commands.back;
 
@@ -131,12 +194,14 @@ function Turtle(canvasId, bgcolor, pcolor) {
     that.angle = angle;
     that.angle %= 360;
     if (that.angle < 0) that.angle += 360;
+    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.rotateTurtle(that);
   };
   commands.setH = commands.setHeading;
 
   commands.home = function() {
     that.posX = that.canvas.width / 2;
     that.posY = that.canvas.height / 2;
+    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
   };
 
   commands.arc = function(radius, angle) {
@@ -151,6 +216,10 @@ function Turtle(canvasId, bgcolor, pcolor) {
     right(angle);
     forward(radius);
     that.drawing = oldDrawing;
+    if (!that.hidden && that.turtleTurtle) {
+      that.turtleTurtle.rotateTurtle(that);
+      that.turtleTurtle.moveTurtle(that);
+    }
   };
 
   commands.pos = function() {
@@ -208,19 +277,23 @@ function Turtle(canvasId, bgcolor, pcolor) {
   commands.setPos = function(pos) {
     that.posX = pos[0];
     that.posY = pos[1];
+    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
   };
 
   commands.setXY = function(x, y) {
     that.posX = x;
     that.posY = y;
+    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
   };
 
   commands.setX = function(x) {
     that.posX = x;
+    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
   };
 
   commands.setY = function(y) {
     that.posY = y;
+    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
   };
 
   commands.repeat = function(n, block) {
@@ -259,27 +332,4 @@ function Turtle(canvasId, bgcolor, pcolor) {
 
   that.clearScreen();
 }
-
-/*
-  that.createthat = function() {
-    that.turtleCanvas.style.position = 'absolute';
-    that.turtleCanvas.style.left = (that.canvas.offsetLeft + 320 - that.turtleCanvas.width) + 'px';
-    that.turtleCanvas.style.top = (200 + that.canvas.offsetTop - that.turtleCanvas.height / 2) + 'px';
-    that.turtleCanvas.style.visibility = 'visible';
-    that.turtleCanvas.style.zIndex = '1';
-    that.turtleCtx.strokeStyle = 'red';
-    that.turtleCtx.beginPath();
-    that.turtleCtx.moveTo(0,0);
-    that.turtleCtx.lineTo(0,10);
-    that.turtleCtx.lineTo(10,5);
-    that.turtleCtx.lineTo(0,0);
-    that.turtleCtx.stroke();
-    that.turtleCtx.rotate(30);
-  };
-
-  */
-
-/*
- * Commands
- */
 
