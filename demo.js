@@ -31,12 +31,13 @@ function stupidPolygon() {
   fd(100); rt(100);
   fd(100); rt(100);
   fd(100); 
-  //setH(towards(startPos));
-  //fd(distance(startPos));
+  setH(towards(startPos));
+  fd(distance(startPos));
   setH(startHeading);
 }
 
 function stupidPolygonStar() {
+  setBG('#020');
   setPC('#0f0');
   repeat(360 / 60, function() {
     stupidPolygon();
@@ -49,8 +50,7 @@ function draw() {
   var t = new Turtle('turtleCanvas');
   t.createTurtle(screenTurtle);
   screenTurtle.injectCommands(self);
-  setBackground('#020');
-  //shapes();
+  shapes();
   //stupidPolygonStar();
-  stupidPolygon();
+  //stupidPolygon();
 }
