@@ -6,6 +6,7 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
   var that = this;
   that.drawing = false;
   that.hidden = false;
+  that.filling = false;
   that.angle = 0;
   that.posX = 0;
   that.posY = 0;
@@ -49,10 +50,12 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
 
   that.moveTo = function(x, y) {
     if (that.drawing) {
-      that.ctx.beginPath();
-      that.ctx.moveTo(that.posX, that.posY);
+      if (!that.filling) {
+        that.ctx.beginPath();
+        that.ctx.moveTo(that.posX, that.posY);
+      }
       that.ctx.lineTo(that.posX + x, that.posY + y);
-      that.ctx.stroke();
+      if (!that.filling) that.ctx.stroke();
     }
     that.posX += x;
     that.posY += y;
@@ -214,9 +217,9 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
     that.back(radius);
     var startAngle = that.angleAsRad();
     var endAngle = startAngle + that.deg2rad(angle);
-    that.ctx.beginPath();
+    if (!that.filling) that.ctx.beginPath();
     that.ctx.arc(that.posX, that.posY, radius, startAngle, endAngle, startAngle > endAngle);
-    that.ctx.stroke();
+    if (!that.filling) that.ctx.stroke();
     that.rotate(angle);
     that.forward(radius);
     that.drawing = oldDrawing;
@@ -312,11 +315,28 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
     }
   };
 
+  commands.fillBegin = function() {
+    that.filling = true;
+    that.ctx.beginPath();
+  };
+
+  commands.fillEnd = function() {
+    that.filling = false;
+    that.ctx.closePath();
+    that.ctx.fill();
+  };
+
+  commands.fill = function(block) {
+    that.fillBegin();
+    block();
+    that.fillEnd();
+  }
+
   that.injectCommands = function(obj) {
     for (var name in that.commands) {
       obj[name] = that.commands[name];
     }
-  }
+  };
   that.injectCommands(this);
 
   var canvas = document.getElementById(canvasId);

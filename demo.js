@@ -46,7 +46,9 @@ function stupidPolygonStar() {
 }
 
 function petal(size) {
-  arc(size, 60); rt(120); arc(size, 60); rt(120);
+  fill(function() {
+    arc(size, 60); rt(120); arc(size, 60); rt(120);
+  });
 }
 
 function petals(number) {
@@ -70,10 +72,16 @@ function flower() {
   pu();
   fd(80);
   pd();
-  setPC('#f00');;
-  petals(20);
   setPC('#0f0');;
   bk(250);
+  pu();
+  fd(250);
+  setPC('#f00');;
+  petals(20);
+  setPC('#fd0');;
+  fd(40);
+  fill(function () { arc(40, 360); });
+  bk(290);
   setPC('#0f0');;
   rt(165);
   leaves(6);
@@ -82,6 +90,7 @@ function flower() {
 function draw() {
   var t = new TurtleGraphics('canvas', 'turtleCanvas');
   t.injectCommands(self);
+  ht();
   flower();
   //shapes();
   //stupidPolygonStar();
