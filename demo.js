@@ -45,9 +45,44 @@ function stupidPolygonStar() {
   });
 }
 
+function petal(size) {
+  arc(size, 60); rt(120); arc(size, 60); rt(120);
+}
+
+function petals(number) {
+  var step = 360 / number;
+  repeat(number, function() {
+    petal(100);
+    rt(step);
+  });
+}
+
+function leaves(number) {
+  var step = 180 / number;
+  repeat(number, function() {
+    petal(80);
+    rt(step);
+  });
+}
+
+function flower() {
+  lt(90);
+  pu();
+  fd(80);
+  pd();
+  setPC('#f00');;
+  petals(20);
+  setPC('#0f0');;
+  bk(250);
+  setPC('#0f0');;
+  rt(165);
+  leaves(6);
+}
+
 function draw() {
   var t = new TurtleGraphics('canvas', 'turtleCanvas');
   t.injectCommands(self);
+  flower();
   //shapes();
   //stupidPolygonStar();
   //stupidPolygon();
