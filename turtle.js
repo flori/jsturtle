@@ -8,7 +8,11 @@ var Turtle = {
   ctx:      null,
 };
 
-Turtle.angleAsRad = function(angle) {
+Turtle.deg2rad = function(angle) {
+  return angle * Math.PI / 180;
+};
+
+Turtle.angleAsRad = function() {
   return Turtle.angle * Math.PI / 180;
 };
 
@@ -40,6 +44,12 @@ Turtle.moveTo = function(x, y) {
   }
   Turtle.posX += x;
   Turtle.posY += y;
+};
+
+Turtle.rotate = function(addAngle) {
+  Turtle.angle += addAngle;
+  Turtle.angle %= 360;
+  if (Turtle.angle < 0) Turtle.angle += 360;
 };
 
 function clean() {
@@ -81,6 +91,7 @@ function isPenDown() {
 
 function setPenColor(color) {
   Turtle.ctx.strokeStyle = color;
+  Turtle.ctx.fillStyle = color;
 }
 setPC = setPenColor;
 
@@ -108,12 +119,6 @@ function back(length) {
 }
 var bk = back;
 
-function rotate(addAngle) {
-  Turtle.angle += addAngle;
-  Turtle.angle %= 360;
-  if (Turtle.angle < 0) Turtle.angle += 360;
-}
-
 function setHeading(angle) {
   Turtle.angle = angle;
   Turtle.angle %= 360;
@@ -126,7 +131,23 @@ function home() {
   Turtle.posY = Turtle.canvas.height / 2;
 }
 
-// arc
+function arc(radius, angle) {
+  var startAngle = Turtle.angleAsRad();
+  var endAngle = startAngle + Turtle.deg2rad(angle);
+  Turtle.ctx.beginPath();
+  Turtle.ctx.arc(Turtle.posX, Turtle.posY, radius, startAngle, endAngle, startAngle > endAngle);
+  Turtle.ctx.stroke();
+}
+
+function arc2(radius, angle) {
+  arc(radius, angle);
+  right(angle);
+  var oldDrawing = Turtle.drawing;
+  Turtle.drawing = false;
+  forward(radius);
+  left(angle);
+  Turtle.drawing = oldDrawing;
+}
 
 function pos() {
   return [ Turtle.posX, Turtle.posY ];
@@ -159,12 +180,12 @@ function distance(endPos) {
 }
 
 function right(angle) {
-  rotate(angle);
+  Turtle.rotate(angle);
 }
 var rt = right;
 
 function left(angle) {
-  rotate(-angle);
+  Turtle.rotate(-angle);
 }
 var lt = left;
 
@@ -202,7 +223,14 @@ function regPoly(edges, size) {
   });
 }
 
-function squares() {
+function print() {
+  if (!console) return;
+  for (var i = 0; i < arguments.length; i++) {
+    console.log(arguments[i]);
+  }
+}
+
+function shapes() {
   var size = 10;
   var step = 10;
   var color = 0;
@@ -216,13 +244,12 @@ function squares() {
     color = Math.round(256 * (x / 35));
     setPenColor('rgb(0,' + color + ',0)');
     regPoly(7, size);
-    console.log(color);
     right(step);
     size *= 1.08;
   });
 }
 
 function draw() {
-  squares();
+  shapes();
 }
 
