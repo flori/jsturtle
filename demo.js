@@ -26,6 +26,7 @@ function shapes() {
 }
 
 function draw() {
+  /*
   setBackground('#020');
   //shapes();
   fd(100); rt(100);
@@ -34,4 +35,5 @@ function draw() {
   Turtle.createTurtle();
   setH(towards([320, 200]));
   fd(distance([320, 200]));
+  */
 }
