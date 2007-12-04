@@ -185,7 +185,7 @@ function Turtle(canvasId, bgcolor, pcolor) {
     var startPos = pos();
     var dx = endPos[0] - startPos[0];
     var dy = endPos[1] - startPos[1];
-    return that.rad2deg(Math.atan(dy / dx));
+    return that.rad2deg(Math.atan2(dy, dx));
   };
 
   commands.distance = function(endPos) {
@@ -239,9 +239,12 @@ function Turtle(canvasId, bgcolor, pcolor) {
     }
   };
 
-  for (var name in commands) {
-    that[name] = commands[name];
+  that.injectCommands = function(obj) {
+    for (var name in that.commands) {
+      obj[name] = that.commands[name];
+    }
   }
+  that.injectCommands(this);
 
   var canvas = document.getElementById(canvasId);
   if (!canvas.getContext) throw("need a canvas for id = '" + canvasId + "'");

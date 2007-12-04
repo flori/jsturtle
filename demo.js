@@ -25,15 +25,29 @@ function shapes() {
   });
 }
 
-function draw() {
-  /*
-  setBackground('#020');
-  //shapes();
+function stupidPolygon() {
+  var startPos = pos();
+  var startHeading = heading();
   fd(100); rt(100);
   fd(100); rt(100);
   fd(100); 
-  Turtle.createTurtle();
-  setH(towards([320, 200]));
-  fd(distance([320, 200]));
-  */
+  setH(towards(startPos));
+  fd(distance(startPos));
+  setH(startHeading);
+}
+
+function stupidPolygonStar() {
+  setPC('#0f0');
+  repeat(360 / 60, function() {
+    stupidPolygon();
+    rt(60);
+  });
+}
+
+function draw() {
+  var t = new Turtle('canvas');
+  t.injectCommands(self);
+  setBackground('#020');
+  shapes();
+  //stupidPolygonStar();
 }
