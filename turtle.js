@@ -211,14 +211,14 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
   commands.arc = function(radius, angle) {
     var oldDrawing = that.drawing;
     that.drawing = false;
-    back(radius);
+    that.back(radius);
     var startAngle = that.angleAsRad();
     var endAngle = startAngle + that.deg2rad(angle);
     that.ctx.beginPath();
     that.ctx.arc(that.posX, that.posY, radius, startAngle, endAngle, startAngle > endAngle);
     that.ctx.stroke();
-    rotate(angle);
-    forward(radius);
+    that.rotate(angle);
+    that.forward(radius);
     that.drawing = oldDrawing;
   };
 

@@ -48,7 +48,7 @@ function stupidPolygonStar() {
 function draw() {
   var t = new TurtleGraphics('canvas', 'turtleCanvas');
   t.injectCommands(self);
-  shapes();
+  //shapes();
   //stupidPolygonStar();
   //stupidPolygon();
 }
