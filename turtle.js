@@ -175,6 +175,18 @@ function pos() {
   return [ Turtle.posX, Turtle.posY ];
 }
 
+function originPos() {
+  return [ 0, 0 ];
+}
+
+function centrePos() {
+  return [ Turtle.canvas.width / 2, Turtle.canvas.height / 2 ];
+}
+
+function maxPos() {
+  return [ Turtle.canvas.width, Turtle.canvas.height ];
+}
+
 function xCor() {
   return Turtle.posX;
 }
