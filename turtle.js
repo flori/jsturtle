@@ -124,7 +124,7 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
   // fill
 
   commands.showTurtle = function() {
-    that.hidden = true;
+    that.hidden = false;
     if (!that.turtleTurtle) return;
     that.turtleTurtle.canvas.style.zIndex = 1;
     that.turtleTurtle.rotateTurtle(that);
@@ -137,7 +137,7 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
   };
 
   commands.hideTurtle = function() {
-    that.hidden = false;
+    that.hidden = true;
     if (!that.turtleTurtle) return;
     that.turtleTurtle.canvas.style.zIndex = -1;
   }
