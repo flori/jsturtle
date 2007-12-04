@@ -132,20 +132,16 @@ function home() {
 }
 
 function arc(radius, angle) {
+  var oldDrawing = Turtle.drawing;
+  Turtle.drawing = false;
+  back(radius);
   var startAngle = Turtle.angleAsRad();
   var endAngle = startAngle + Turtle.deg2rad(angle);
   Turtle.ctx.beginPath();
   Turtle.ctx.arc(Turtle.posX, Turtle.posY, radius, startAngle, endAngle, startAngle > endAngle);
   Turtle.ctx.stroke();
-}
-
-function arc2(radius, angle) {
-  arc(radius, angle);
   right(angle);
-  var oldDrawing = Turtle.drawing;
-  Turtle.drawing = false;
   forward(radius);
-  left(angle);
   Turtle.drawing = oldDrawing;
 }
 
