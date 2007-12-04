@@ -5,15 +5,40 @@ var Turtle = {
   posY:     0,
   canvasId: null,
   canvas:   null,
-  ctx:      null,
+  ctx:      null
 };
 
 Turtle.deg2rad = function(angle) {
   return angle * Math.PI / 180;
 };
 
+Turtle.rad2deg = function(angle) {
+  return angle * 180 / Math.PI;
+};
+
 Turtle.angleAsRad = function() {
   return Turtle.angle * Math.PI / 180;
+};
+
+Turtle.prepareColor = function(color) {
+  if (color instanceof Array) {
+    switch (color.length) {
+      case 3:
+        color = 'rgb(' + Math.round(color[0]) + ',' +
+          Math.round(color[1]) + ',' +
+          Math.round(color[2]) + ')';
+        break;
+      case 4:
+        color = 'rgba(' + Math.round(color[0]) + ',' +
+          Math.round(color[1]) + ',' +
+          Math.round(color[2]) + ',' +
+          Math.round(color[3]) + ')';
+        break;
+      default:
+      throw("only arrays of length 3 or 4 allowed");
+    }
+  }
+  return color;
 };
 
 Turtle.init = function(canvasId, bgcolor, pcolor) {
@@ -39,7 +64,6 @@ Turtle.moveTo = function(x, y) {
     Turtle.ctx.beginPath();
     Turtle.ctx.moveTo(Turtle.posX, Turtle.posY);
     Turtle.ctx.lineTo(Turtle.posX + x, Turtle.posY + y);
-    Turtle.ctx.closePath();
     Turtle.ctx.stroke();
   }
   Turtle.posX += x;
@@ -90,15 +114,17 @@ function isPenDown() {
 // penPaint, penErase, penRevert
 
 function setPenColor(color) {
+  color = Turtle.prepareColor(color);
   Turtle.ctx.strokeStyle = color;
   Turtle.ctx.fillStyle = color;
 }
 setPC = setPenColor;
 
 function setBackground(color) {
+  color = Turtle.prepareColor(color);
   Turtle.canvas.style.background = color;
 }
-setBG = setBackground;
+var setBG = setBackground;
 
 function setPenSize(size) {
   
@@ -124,7 +150,7 @@ function setHeading(angle) {
   Turtle.angle %= 360;
   if (Turtle.angle < 0) Turtle.angle += 360;
 }
-setH = setHeading;
+var setH = setHeading;
 
 function home() {
   Turtle.posX = Turtle.canvas.width / 2;
@@ -165,7 +191,7 @@ function towards(endPos) {
   var startPos = pos();
   var dx = endPos[0] - startPos[0];
   var dy = endPos[1] - startPos[1];
-  return (Math.atan(dx, dy) * 180 / Math.PI) - 90;
+  return Turtle.rad2deg(Math.atan(dy / dx));
 }
 
 function distance(endPos) {
@@ -246,6 +272,13 @@ function shapes() {
 }
 
 function draw() {
-  shapes();
+  setBackground('#020');
+  //shapes();
+  fd(100); rt(100);
+  fd(100); rt(100);
+  fd(100); 
+  print(towards([320, 200]));
+  setH(towards([320, 200]));
+  fd(distance([320, 200]));
 }
 
