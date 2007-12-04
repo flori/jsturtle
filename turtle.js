@@ -1,14 +1,18 @@
-/*
- * Implementation
- */
-
 function Turtle(canvasId, bgcolor, pcolor) {
+  /*
+   * Turtle state
+   */
+
   var that = this;
   that.drawing = false;
   that.hidden = false;
   that.angle = 0;
   that.posX = 0;
   that.posY = 0;
+
+  /*
+   * Implementation
+   */
 
   that.deg2rad = function(angle) {
     return angle * Math.PI / 180;
@@ -19,7 +23,7 @@ function Turtle(canvasId, bgcolor, pcolor) {
   };
 
   that.angleAsRad = function() {
-    return that.angle * Math.PI / 180;
+    return that.deg2rad(that.angle);
   };
 
   that.prepareColor = function(color) {
@@ -92,7 +96,7 @@ function Turtle(canvasId, bgcolor, pcolor) {
   that.rotateTurtle = function(screenTurtle) {
     var angle = screenTurtle.heading();
     that.clearScreen();
-    that.setH(angle);
+    that.setHeading(angle);
     that.drawTurtle();
   };
 
@@ -127,12 +131,20 @@ function Turtle(canvasId, bgcolor, pcolor) {
   }
   commands.st = commands.showTurtle;
 
+  commands.isTurtleShown = function() {
+    return !that.hidden;
+  };
+
   commands.hideTurtle = function() {
     that.hidden = false;
     if (!that.turtleTurtle) return;
     that.turtleTurtle.canvas.style.zIndex = -1;
   }
   commands.ht = commands.hideTurtle;
+
+  commands.isTurtleHidden = function() {
+    return that.hidden;
+  };
 
   commands.penUp = function() {
     that.drawing = false;
