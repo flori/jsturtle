@@ -1,4 +1,4 @@
-function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
+function TurtleGraphics(config) {
   /*
    * TurtleGraphics state
    */
@@ -59,25 +59,24 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
     }
     that.posX += x;
     that.posY += y;
-    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
+    if (!that.hidden && that.turtleTG) that.turtleTG.moveTurtle(that);
   };
 
   that.rotate = function(addAngle) {
     that.angle += addAngle;
     that.angle %= 360;
     if (that.angle < 0) that.angle += 360;
-    if (that.turtleTurtle) that.turtleTurtle.rotateTurtle(that);
+    if (that.turtleTG) that.turtleTG.rotateTurtle(that);
   };
 
-  that.createTurtle = function(screenTurtle) {
-    screenTurtle.turtleTurtle = that;
+  that.createTurtle = function(screenTG) {
+    screenTG.turtleTG = that;
     that.canvas.style.position = 'absolute';
     that.canvas.style.visibility = 'visible';
     that.canvas.style.backgroundColor = 'transparent';
     that.canvas.style.zIndex = '1';
-    that.setPenColor('white');
     that.drawTurtle();
-    that.moveTurtle(screenTurtle);
+    that.moveTurtle(screenTG);
   };
 
   that.drawTurtle = function() {
@@ -91,14 +90,17 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
     that.forward(l / 2);
   };
 
-  that.moveTurtle = function(screenTurtle) {
-    var pos = screenTurtle.pos();
-    that.canvas.style.left = (screenTurtle.canvas.offsetLeft + pos[0] - that.canvas.width / 2) + 'px';
-    that.canvas.style.top = (pos[1] + screenTurtle.canvas.offsetTop - that.canvas.height / 2) + 'px';
+  that.moveTurtle = function(screenTG) {
+    var screenCanvas = screenTG.canvas;
+    var pos = screenTG.pos();
+    var offsetLeft = screenCanvas.offsetLeft + (screenCanvas.offsetWidth - screenCanvas.width) / 2;
+    that.canvas.style.left = (offsetLeft + pos[0] - that.canvas.width / 2) + 'px';
+    var offsetTop = screenCanvas.offsetTop + (screenCanvas.offsetHeight - screenCanvas.height) / 2;
+    that.canvas.style.top = (offsetTop + pos[1] - that.canvas.height / 2) + 'px';
   };
 
-  that.rotateTurtle = function(screenTurtle) {
-    var angle = screenTurtle.heading();
+  that.rotateTurtle = function(screenTG) {
+    var angle = screenTG.heading();
     that.clearScreen();
     that.setHeading(angle);
     that.drawTurtle();
@@ -129,10 +131,10 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
 
   commands.showTurtle = function() {
     that.hidden = false;
-    if (that.turtleTurtle === undefined) return;
-    that.turtleTurtle.canvas.style.zIndex = 1;
-    that.turtleTurtle.rotateTurtle(that);
-    that.turtleTurtle.moveTurtle(that);
+    if (that.turtleTG === undefined) return;
+    that.turtleTG.canvas.style.zIndex = 1;
+    that.turtleTG.rotateTurtle(that);
+    that.turtleTG.moveTurtle(that);
   }
   commands.st = commands.showTurtle;
 
@@ -142,8 +144,8 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
 
   commands.hideTurtle = function() {
     that.hidden = true;
-    if (that.turtleTurtle === undefined) return;
-    that.turtleTurtle.canvas.style.zIndex = -1;
+    if (that.turtleTG === undefined) return;
+    that.turtleTG.canvas.style.zIndex = -1;
   }
   commands.ht = commands.hideTurtle;
 
@@ -215,7 +217,7 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
     that.angle = angle;
     that.angle %= 360;
     if (that.angle < 0) that.angle += 360;
-    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.rotateTurtle(that);
+    if (!that.hidden && that.turtleTG) that.turtleTG.rotateTurtle(that);
   };
   commands.setH = commands.setHeading;
 
@@ -301,23 +303,23 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
     if (pos.length != 2) throw("pos array of length 2 required");
     that.posX = pos[0];
     that.posY = pos[1];
-    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
+    if (!that.hidden && that.turtleTG) that.turtleTG.moveTurtle(that);
   };
 
   commands.setXY = function(x, y) {
     that.posX = x;
     that.posY = y;
-    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
+    if (!that.hidden && that.turtleTG) that.turtleTG.moveTurtle(that);
   };
 
   commands.setX = function(x) {
     that.posX = x;
-    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
+    if (!that.hidden && that.turtleTG) that.turtleTG.moveTurtle(that);
   };
 
   commands.setY = function(y) {
     that.posY = y;
-    if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
+    if (!that.hidden && that.turtleTG) that.turtleTG.moveTurtle(that);
   };
 
   commands.random = function(start, end) {
@@ -341,7 +343,7 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
     for (;; i++) block(i);
   }
 
-  commands.print = function() {
+  commands.show = function() {
     if (console === undefined) return;
     for (var i = 0; i < arguments.length; i++) {
       console.log(arguments[i]);
@@ -372,21 +374,26 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
   };
   that.injectCommands(this);
 
-  var canvas = document.getElementById(canvasId);
-  if (!canvas || !canvas.getContext) throw("need a canvas for id = '" + canvasId + "'");
+  var canvas = document.getElementById(config.canvasId);
+  if (!canvas || !canvas.getContext) throw("need a canvas for id = '" + config.canvasId + "'");
   that.canvas = canvas;
   that.ctx = canvas.getContext("2d");
 
-  if (bgcolor === undefined) bgcolor = '#000';
-  that.setBackground(bgcolor);
+  var background = config.background;
+  if (background === undefined) background = 'white';
+  that.setBackground(background);
 
-  if (pcolor === undefined) pcolor = '#cc0';
-  that.setPenColor(pcolor);
+  var penColor = config.penColor;
+  if (penColor === undefined) penColor = 'black';
+  that.setPenColor(penColor);
 
   that.clearScreen();
 
-  if (turtleCanvasId) {
-    var turtle = new TurtleGraphics(turtleCanvasId, null, pcolor, bgcolor);
+  if (config.turtleCanvasId) {
+    var turtle = new TurtleGraphics({
+      canvasId: config.turtleCanvasId,
+      penColor: config.turtlePenColor || 'green'
+    });
     turtle.createTurtle(that);
   }
 }

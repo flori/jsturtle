@@ -89,7 +89,8 @@ function flower() {
   leaves(6);
 }
 
-function hilbert(size, depth) {
+function hilbert(depth, size) {
+  if (!size) size = 10;
   var f = function() { fd(size); };
   var p = function() { rt(90); };
   var m = function() { lt(90); };
@@ -101,15 +102,18 @@ function hilbert(size, depth) {
     if (n == 0) return;
     m(); l(n - 1); f(); p(); r(n - 1); f(); r(n - 1); p(); f(); l(n - 1); m();
   };
-  r(depth);
+  l(depth);
 }
 
 function draw() {
-  var t = new TurtleGraphics('canvas', 'turtleCanvas');
+  var t = new TurtleGraphics({
+    canvasId: 'canvas',
+    turtleCanvasId: 'turtleCanvas'
+  });
   t.injectCommands(self);
-  ht();
-  //setPos([maxX() / 4, maxY() * 9 / 10]);
-  //hilbert(10, 5);
+  //ht();
+  //setPos([maxX() / 4, maxY() * 1 / 10]);
+  //hilbert(5, 10);
 
   //flower();
   //shapes();
