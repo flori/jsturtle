@@ -118,6 +118,7 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
     that.clean();
     that.setPos(that.centrePos());
     that.setHeading(0);
+    that.setLineCap('butt');
     that.penDown();
   };
   commands.cs = commands.clearScreen;
@@ -190,6 +191,11 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
     }
     that.ctx.lineWidth = size;
   };
+
+  // 'butt', 'round', 'square'
+  commands.setLineCap = function(type) {
+    that.ctx.lineCap = type;
+  }
 
   commands.forward = function(length) {
     var x = length * Math.cos(that.angleAsRad());
