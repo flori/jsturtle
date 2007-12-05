@@ -89,6 +89,10 @@ function flower() {
   leaves(6);
 }
 
+/*
+ * L-Systems
+ */
+
 function koch_triangle(depth, size) {
   if (!size) size = 10;
   var f = function() { forward(size); };
@@ -138,6 +142,27 @@ function hilbert(depth, size) {
   l(depth);
 }
 
+function dragon(depth, size) {
+  if (!size) size = 10;
+  var f = function() { forward(size); };
+  var p = function() { left(90); };
+  var m = function() { right(90); };
+  var x = function(n) {
+    if (n == 0) {
+      f();
+    } else  {
+      x(n - 1); p(); y(n - 1); p();
+    }
+  };
+  var y = function(n) {
+    if (n == 0) {
+      f();
+    } else {
+      m(); x(n - 1); m(); y(n - 1); 
+    }
+  };
+  x(depth);
+}
 
 function draw() {
   var t = new TurtleGraphics({
