@@ -180,6 +180,13 @@ function TurtleGraphics(config) {
   };
   commands.setPC = commands.setPenColor;
 
+  commands.setTurtleColor = function(color) {
+    if (that.turtleTG === undefined) return;
+    that.turtleTG.setPenColor(color);
+    that.turtleTG.clearScreen();
+    that.turtleTG.drawTurtle();
+  }
+
   commands.setBackground = function(color) {
     color = that.prepareColor(color);
     that.canvas.style.background = color;
@@ -392,7 +399,7 @@ function TurtleGraphics(config) {
   if (config.turtleCanvasId) {
     var turtle = new TurtleGraphics({
       canvasId: config.turtleCanvasId,
-      penColor: config.turtlePenColor || 'green'
+      penColor: config.turtleColor || '#b00'
     });
     turtle.createTurtle(that);
   }
