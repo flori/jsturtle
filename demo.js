@@ -164,6 +164,14 @@ function dragon(depth, size) {
   x(depth);
 }
 
+function dragonFiller(depth, size) {
+  var startPos = pos();
+  var colors = ['red', 'blue', 'green', 'black' ];
+  repeat(4, function(i) {
+    setPos(startPos); setPC(colors[i]); dragon(depth, size); rt(90);
+  });
+}
+
 function draw() {
   var t = new TurtleGraphics({
     canvasId: 'canvas',
