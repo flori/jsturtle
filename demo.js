@@ -89,11 +89,29 @@ function flower() {
   leaves(6);
 }
 
+function hilbert(size, depth) {
+  var f = function() { fd(size); };
+  var p = function() { rt(90); };
+  var m = function() { lt(90); };
+  var l = function(n) {
+    if (n == 0) return;
+    p(); r(n - 1); f(); m(); l(n - 1); f(); l(n - 1); m(); f(); r(n - 1); p();
+  };
+  var r = function(n) {
+    if (n == 0) return;
+    m(); l(n - 1); f(); p(); r(n - 1); f(); r(n - 1); p(); f(); l(n - 1); m();
+  };
+  r(depth);
+}
+
 function draw() {
   var t = new TurtleGraphics('canvas', 'turtleCanvas');
   t.injectCommands(self);
   ht();
-  flower();
+  //setPos([maxX() / 4, maxY() * 9 / 10]);
+  //hilbert(10, 5);
+
+  //flower();
   //shapes();
   //stupidPolygonStar();
   //stupidPolygon();

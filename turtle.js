@@ -129,7 +129,7 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
 
   commands.showTurtle = function() {
     that.hidden = false;
-    if (!that.turtleTurtle) return;
+    if (that.turtleTurtle === undefined) return;
     that.turtleTurtle.canvas.style.zIndex = 1;
     that.turtleTurtle.rotateTurtle(that);
     that.turtleTurtle.moveTurtle(that);
@@ -142,7 +142,7 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
 
   commands.hideTurtle = function() {
     that.hidden = true;
-    if (!that.turtleTurtle) return;
+    if (that.turtleTurtle === undefined) return;
     that.turtleTurtle.canvas.style.zIndex = -1;
   }
   commands.ht = commands.hideTurtle;
@@ -249,6 +249,14 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
     return [ that.canvas.width / 2, that.canvas.height / 2 ];
   };
 
+  commands.maxX = function() {
+    return that.canvas.width;
+  };
+
+  commands.maxY = function() {
+    return that.canvas.height;
+  };
+
   commands.maxPos = function() {
     return [ that.canvas.width, that.canvas.height ];
   };
@@ -290,6 +298,7 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
   commands.lt = commands.left;
 
   commands.setPos = function(pos) {
+    if (pos.length != 2) throw("pos array of length 2 required");
     that.posX = pos[0];
     that.posY = pos[1];
     if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
@@ -311,6 +320,18 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
     if (!that.hidden && that.turtleTurtle) that.turtleTurtle.moveTurtle(that);
   };
 
+  commands.random = function(start, end) {
+    if (start === undefined) {
+      return Math.random();
+    } else if (end === undefined) {
+      return Math.floor(Math.random() * Math.floor(start));
+    } else if (start < end) {
+      return start + Math.floor(Math.random() * (1 + Math.floor(end) - Math.floor(start)));
+    } else {
+      throw("start has to be < end")
+    }
+  }
+
   commands.repeat = function(n, block) {
     for (var i = 0; i < n; i++) block(i);
   };
@@ -321,7 +342,7 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
   }
 
   commands.print = function() {
-    if (!console) return;
+    if (console === undefined) return;
     for (var i = 0; i < arguments.length; i++) {
       console.log(arguments[i]);
     }
@@ -356,10 +377,10 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
   that.canvas = canvas;
   that.ctx = canvas.getContext("2d");
 
-  if (!bgcolor) bgcolor = '#000';
+  if (bgcolor === undefined) bgcolor = '#000';
   that.setBackground(bgcolor);
 
-  if (!pcolor) pcolor = '#cc0';
+  if (pcolor === undefined) pcolor = '#cc0';
   that.setPenColor(pcolor);
 
   that.clearScreen();
