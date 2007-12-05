@@ -73,8 +73,10 @@ function flower() {
   fd(80);
   pd();
   setPC('#0f0');;
+  setPenSize(4);
   bk(250);
   pu();
+  setPenSize(1);
   fd(250);
   setPC('#f00');;
   petals(20);

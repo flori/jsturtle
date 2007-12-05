@@ -42,7 +42,7 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
             Math.round(color[3]) + ')';
           break;
         default:
-        throw("only arrays of length 3 or 4 allowed");
+          throw("only arrays of length 3 or 4 allowed");
       }
     }
     return color;
@@ -183,7 +183,13 @@ function TurtleGraphics(canvasId, turtleCanvasId, bgcolor, pcolor) {
   };
   commands.setBG = commands.setBackground;
 
-  commands.setPenSize = function(sizes) { };
+  commands.setPenSize = function(size) {
+    if (size instanceof Array) {
+      if (size.length != 2) throw("size array of length 2 required");
+      size = size[0] > size[1] ? size[0] : size[1];
+    }
+    that.ctx.lineWidth = size;
+  };
 
   commands.forward = function(length) {
     var x = length * Math.cos(that.angleAsRad());
