@@ -119,7 +119,7 @@ function koch_square(depth, size) {
 }
 
 function snowflake(fractal, depth, size) {
-  repeat(3, function() { eval(fractal + "(depth, size);"); rt(120); });
+  repeat(3, function() { fractal.apply(fractal, [ depth, size ]); rt(120); });
 }
 
 function hilbert(depth, size) {
