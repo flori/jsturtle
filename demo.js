@@ -14,11 +14,11 @@ function shapes() {
   back(100);
   right(90);
   forward(100);
-  left(180);
+  right(180);
   penDown();
   repeat(36, function(x) {
     color = Math.round(256 * (x / 35));
-    setPenColor('rgb(0,' + color + ',0)');
+    setPenColor([ 0, color, 128 - color / 2 ]);
     regPoly(7, size);
     right(step);
     size *= 1.08;
@@ -28,11 +28,11 @@ function shapes() {
 function stupidPolygon() {
   var startPos = pos();
   var startHeading = heading();
-  fd(100); rt(100);
-  fd(100); rt(100);
-  fd(100); 
+  forward(100); left(100);
+  forward(100); left(100);
+  forward(100); 
   setH(towards(startPos));
-  fd(distance(startPos));
+  forward(distance(startPos));
   setH(startHeading);
 }
 
@@ -41,13 +41,13 @@ function stupidPolygonStar() {
   setPC('#0f0');
   repeat(360 / 60, function() {
     stupidPolygon();
-    rt(60);
+    left(60);
   });
 }
 
 function petal(size) {
   fill(function() {
-    arc(size, 60); rt(120); arc(size, 60); rt(120);
+    arc(size, 60); right(120); arc(size, 60); right(120);
   });
 }
 
@@ -55,7 +55,7 @@ function petals(number) {
   var step = 360 / number;
   repeat(number, function() {
     petal(100);
-    rt(step);
+    right(step);
   });
 }
 
@@ -63,37 +63,70 @@ function leaves(number) {
   var step = 180 / number;
   repeat(number, function() {
     petal(80);
-    rt(step);
+    right(step);
   });
 }
 
 function flower() {
-  lt(90);
+  left(90);
   pu();
-  fd(80);
+  forward(80);
   pd();
   setPC('#0f0');;
   setPenSize(4);
   bk(250);
   pu();
   setPenSize(1);
-  fd(250);
+  forward(250);
   setPC('#f00');;
   petals(20);
   setPC('#fd0');;
-  fd(40);
+  forward(40);
   fill(function () { arc(40, 360); });
   bk(290);
   setPC('#0f0');;
-  rt(165);
+  right(165);
   leaves(6);
+}
+
+function koch_triangle(depth, size) {
+  if (!size) size = 10;
+  var f = function() { forward(size); };
+  var p = function() { left(60); };
+  var m = function() { right(60); };
+  var r = function(n) {
+    if (n == 0) {
+      return;
+    } else if (n == 1) {
+      f();
+    } else {
+      r(n - 1); p(); r(n - 1); m(); m(); r(n - 1); p(); r(n - 1);
+    }
+  };
+  r(depth);
+}
+
+function koch_square(depth, size) {
+  if (!size) size = 10;
+  var f = function() { forward(size); };
+  var p = function() { left(90); };
+  var m = function() { right(90); };
+  var r = function(n) {
+    if (n == 0) return;
+    r(n - 1); p(); r(n - 1); m(); f(); m(); r(n - 1); p(); r(n - 1);
+  };
+  r(depth);
+}
+
+function snowflake(fractal, depth, size) {
+  repeat(3, function() { eval(fractal + "(depth, size);"); rt(120); });
 }
 
 function hilbert(depth, size) {
   if (!size) size = 10;
-  var f = function() { fd(size); };
-  var p = function() { rt(90); };
-  var m = function() { lt(90); };
+  var f = function() { forward(size); };
+  var p = function() { left(90); };
+  var m = function() { right(90); };
   var l = function(n) {
     if (n == 0) return;
     p(); r(n - 1); f(); m(); l(n - 1); f(); l(n - 1); m(); f(); r(n - 1); p();
@@ -105,6 +138,7 @@ function hilbert(depth, size) {
   l(depth);
 }
 
+
 function draw() {
   var t = new TurtleGraphics({
     canvasId: 'canvas',
@@ -112,7 +146,7 @@ function draw() {
   });
   t.injectCommands(self);
   //ht();
-  //setPos([maxX() / 4, maxY() * 1 / 10]);
+  //setPos([maxX() * 0.25, maxY() * 0.9]);
   //hilbert(5, 10);
 
   //flower();

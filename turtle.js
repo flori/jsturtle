@@ -81,12 +81,12 @@ function TurtleGraphics(config) {
 
   that.drawTurtle = function() {
     that.forward(that.canvas.width / 2);
-    that.rotate(150);
+    that.right(150);
     var l = Math.ceil(Math.sqrt(that.canvas.width * that.canvas.width + that.canvas.height * that.canvas.height));
     that.forward(l / 2);
-    that.rotate(120);
+    that.right(120);
     that.forward(l / 2);
-    that.rotate(120);
+    that.right(120);
     that.forward(l / 2);
   };
 
@@ -241,7 +241,7 @@ function TurtleGraphics(config) {
     if (!that.filling) that.ctx.beginPath();
     that.ctx.arc(that.posX, that.posY, radius, startAngle, endAngle, startAngle > endAngle);
     if (!that.filling) that.ctx.stroke();
-    that.rotate(angle);
+    that.right(angle);
     that.forward(radius);
     that.drawing = oldDrawing;
   };
