@@ -159,7 +159,7 @@ function dragon(depth, size) {
 
 function dragonFiller(depth, size) {
   var startPos = pos();
-  var colors = ['red', 'blue', 'green', 'black' ];
+  var colors = [ 'red', 'blue', 'green', 'black' ];
   repeat(4, function(i) {
     setPos(startPos); setPC(colors[i]); dragon(depth, size); rt(90);
   });
