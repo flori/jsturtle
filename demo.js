@@ -98,9 +98,7 @@ function koch_triangle(depth, size) {
   var p = function() { left(60); };
   var m = function() { right(60); };
   var f = function(n) {
-    if (n == 0) {
-      return;
-    } else if (n == 1) {
+    if (n == 1) {
       forward(size);
     } else {
       f(n - 1); p(); f(n - 1); m(); m(); f(n - 1); p(); f(n - 1);
@@ -114,9 +112,7 @@ function koch_square(depth, size) {
   var p = function() { left(90); };
   var m = function() { right(90); };
   var f = function(n) {
-    if (n == 0) {
-      return;
-    } else if (n == 1) {
+    if (n == 1) {
       forward(size);
     } else {
       f(n - 1); p(); f(n - 1); m(); f(n - 1); m(); f(n - 1); p(); f(n - 1);
@@ -152,7 +148,7 @@ function dragon(depth, size) {
   var m = function() { right(90); };
   var x = function(n) {
     if (n == 0) return;
-      x(n - 1); p(); y(n - 1); f(); p();
+    x(n - 1); p(); y(n - 1); f(); p();
   };
   var y = function(n) {
     if (n == 0) return;
@@ -171,20 +167,19 @@ function dragonFiller(depth, size) {
 
 function sierpinski(depth, size) {
   if (!size) size = 10;
-  angle = depth % 2 == 1 ? 60 : -60;
-  var f = function() { forward(size); };
+  angle = depth % 2 == 1 ? -60 : 60;
   var p = function() { right(angle); };
   var m = function() { left(angle); };
   var a = function(n) {
-    if (n <= 0) {
-      f();
+    if (n == 1) {
+      forward(size);
     } else {
       b(n - 1); m(); a(n - 1); m(); b(n - 1)
     }
   };
   var b = function(n) {
-    if (n <= 0) {
-      f();
+    if (n == 1) {
+      forward(size);
     } else {
       a(n - 1); p(); b(n - 1); p(); a(n - 1)
     }
