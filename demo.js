@@ -95,31 +95,34 @@ function flower() {
 
 function koch_triangle(depth, size) {
   if (!size) size = 10;
-  var f = function() { forward(size); };
   var p = function() { left(60); };
   var m = function() { right(60); };
-  var r = function(n) {
+  var f = function(n) {
     if (n == 0) {
       return;
     } else if (n == 1) {
-      f();
+      forward(size);
     } else {
-      r(n - 1); p(); r(n - 1); m(); m(); r(n - 1); p(); r(n - 1);
+      f(n - 1); p(); f(n - 1); m(); m(); f(n - 1); p(); f(n - 1);
     }
   };
-  r(depth);
+  f(depth);
 }
 
 function koch_square(depth, size) {
   if (!size) size = 10;
-  var f = function() { forward(size); };
   var p = function() { left(90); };
   var m = function() { right(90); };
-  var r = function(n) {
-    if (n == 0) return;
-    r(n - 1); p(); r(n - 1); m(); f(); m(); r(n - 1); p(); r(n - 1);
+  var f = function(n) {
+    if (n == 0) {
+      return;
+    } else if (n == 1) {
+      forward(size);
+    } else {
+      f(n - 1); p(); f(n - 1); m(); f(n - 1); m(); f(n - 1); p(); f(n - 1);
+    }
   };
-  r(depth);
+  f(depth);
 }
 
 function snowflake(fractal, depth, size) {
