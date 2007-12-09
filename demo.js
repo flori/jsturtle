@@ -172,6 +172,28 @@ function dragonFiller(depth, size) {
   });
 }
 
+function sierpinski(depth, size) {
+  if (!size) size = 10;
+  var f = function() { forward(size); };
+  var p = function() { left(60); };
+  var m = function() { right(60); };
+  var a = function(n) {
+    if (n <= 0) {
+      f();
+    } else {
+      b(n - 1); m(); a(n - 1); m(); b(n - 1)
+    }
+  };
+  var b = function(n) {
+    if (n <= 0) {
+      f();
+    } else {
+      a(n - 1); p(); b(n - 1); p(); a(n - 1)
+    }
+  };
+  a(depth);
+}
+
 function draw() {
   var t = new TurtleGraphics({
     canvasId: 'canvas',
