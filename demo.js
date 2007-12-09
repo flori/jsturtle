@@ -105,8 +105,9 @@ function pythagorasTree(depth, size) {
     setPC('red'); sq(n - 1, s * factor);
     rt(135);
     fd(s);
-    setPC('blue'); sq(n - 1, s * factor);
     lt(135);
+    setPC('blue'); sq(n - 1, s * factor);
+    rt(135);
     bk(s);
   };
   sq(depth, size);
