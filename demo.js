@@ -89,14 +89,37 @@ function flower() {
   leaves(6);
 }
 
+function filledSquare(size) {
+  //fill(function () {
+    repeat(4, function() { fd(size); rt(90); });
+  //});
+}
+
+function pythagorasTree(depth, size) {
+  if (!size) size = 10;
+  var factor = 0.5 * Math.sqrt(2);
+  var sq = function(n, s) {
+    if (n == 0) return;
+    filledSquare(s);
+    lt(135);
+    setPC('red'); sq(n - 1, s * factor);
+    rt(135);
+    fd(s);
+    setPC('blue'); sq(n - 1, s * factor);
+    lt(135);
+    bk(s);
+  };
+  sq(depth, size);
+}
+
 /*
  * L-Systems
  */
 
-function koch_triangle(depth, size) {
+function kochTriangle(depth, size) {
   if (!size) size = 10;
-  var p = function() { left(60); };
-  var m = function() { right(60); };
+  var p = function() { right(60); };
+  var m = function() { left(60); };
   var f = function(n) {
     if (n == 1) {
       forward(size);
@@ -107,10 +130,10 @@ function koch_triangle(depth, size) {
   f(depth);
 }
 
-function koch_square(depth, size) {
+function kochSquare(depth, size) {
   if (!size) size = 10;
-  var p = function() { left(90); };
-  var m = function() { right(90); };
+  var p = function() { right(90); };
+  var m = function() { left(90); };
   var f = function(n) {
     if (n == 1) {
       forward(size);
@@ -122,14 +145,14 @@ function koch_square(depth, size) {
 }
 
 function snowflake(fractal, depth, size) {
-  repeat(3, function() { fractal.apply(null, [ depth, size ]); rt(120); });
+  repeat(3, function() { fractal.apply(null, [ depth, size ]); lt(120); });
 }
 
 function hilbert(depth, size) {
   if (!size) size = 10;
   var f = function() { forward(size); };
-  var p = function() { left(90); };
-  var m = function() { right(90); };
+  var p = function() { right(90); };
+  var m = function() { left(90); };
   var l = function(n) {
     if (n == 0) return;
     p(); r(n - 1); f(); m(); l(n - 1); f(); l(n - 1); m(); f(); r(n - 1); p();
@@ -144,8 +167,8 @@ function hilbert(depth, size) {
 function dragon(depth, size) {
   if (!size) size = 10;
   var f = function() { forward(size); };
-  var p = function() { left(90); };
-  var m = function() { right(90); };
+  var p = function() { right(90); };
+  var m = function() { left(90); };
   var x = function(n) {
     if (n == 0) return;
     x(n - 1); p(); y(n - 1); f(); p();
@@ -168,8 +191,8 @@ function dragonFiller(depth, size) {
 function sierpinski(depth, size) {
   if (!size) size = 10;
   angle = depth % 2 == 1 ? 60 : -60;
-  var p = function() { left(angle); };
-  var m = function() { right(angle); };
+  var p = function() { right(angle); };
+  var m = function() { left(angle); };
   var a = function(n) {
     if (n == 1) {
       forward(size);
@@ -185,6 +208,20 @@ function sierpinski(depth, size) {
     }
   };
   a(depth);
+}
+
+function levyC(depth, size) {
+  if (!size) size = 10;
+  var p = function() { right(45); };
+  var m = function() { left(45); };
+  var f = function(n) {
+    if (n == 1) {
+      forward(size);
+    } else {
+      p(); f(n - 1); m(); m(); f(n - 1); p();
+    }
+  };
+  f(depth);
 }
 
 function draw() {
