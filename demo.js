@@ -148,18 +148,12 @@ function dragon(depth, size) {
   var p = function() { left(90); };
   var m = function() { right(90); };
   var x = function(n) {
-    if (n == 0) {
-      f();
-    } else  {
-      x(n - 1); p(); y(n - 1); p();
-    }
+    if (n == 0) return;
+      x(n - 1); p(); y(n - 1); f(); p();
   };
   var y = function(n) {
-    if (n == 0) {
-      f();
-    } else {
-      m(); x(n - 1); m(); y(n - 1); 
-    }
+    if (n == 0) return;
+    m(); f(); x(n - 1); m(); y(n - 1); 
   };
   x(depth);
 }
@@ -174,9 +168,10 @@ function dragonFiller(depth, size) {
 
 function sierpinski(depth, size) {
   if (!size) size = 10;
+  angle = depth % 2 == 1 ? 60 : -60;
   var f = function() { forward(size); };
-  var p = function() { left(60); };
-  var m = function() { right(60); };
+  var p = function() { right(angle); };
+  var m = function() { left(angle); };
   var a = function(n) {
     if (n <= 0) {
       f();
