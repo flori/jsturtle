@@ -154,7 +154,7 @@ function dragon(depth, size) {
     if (n == 0) return;
     m(); f(); x(n - 1); m(); y(n - 1); 
   };
-  x(depth);
+  f(); x(depth);
 }
 
 function dragonFiller(depth, size) {
@@ -167,9 +167,9 @@ function dragonFiller(depth, size) {
 
 function sierpinski(depth, size) {
   if (!size) size = 10;
-  angle = depth % 2 == 1 ? -60 : 60;
-  var p = function() { right(angle); };
-  var m = function() { left(angle); };
+  angle = depth % 2 == 1 ? 60 : -60;
+  var p = function() { left(angle); };
+  var m = function() { right(angle); };
   var a = function(n) {
     if (n == 1) {
       forward(size);
