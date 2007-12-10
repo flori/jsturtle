@@ -381,8 +381,14 @@ function TurtleGraphics(config) {
   };
   that.injectCommands(this);
 
-  var canvas = document.getElementById(config.canvasId);
-  if (!canvas || !canvas.getContext) throw("need a canvas for id = '" + config.canvasId + "'");
+  var screen = document.getElementById(config.screenId);
+  if (!screen) throw("need a screen for id = '" + config.screenId + "'");
+  that.screen = screen;
+  var canvas = document.createElement("canvas");
+  canvas.setAttribute('width', config.width);
+  canvas.setAttribute('height', config.height);
+  if (config.border) canvas.style.border = config.border;
+  screen.appendChild(canvas);
   that.canvas = canvas;
   that.ctx = canvas.getContext("2d");
 
@@ -396,9 +402,12 @@ function TurtleGraphics(config) {
 
   that.clearScreen();
 
-  if (config.turtleCanvasId) {
+  if (!config.isTurtle) {
     var turtle = new TurtleGraphics({
-      canvasId: config.turtleCanvasId,
+      screenId: config.screenId,
+      isTurtle: true,
+      width: config.turtleSize || 14,
+      height: config.turtleSize || 14,
       penColor: config.turtleColor || '#b00'
     });
     turtle.createTurtle(that);

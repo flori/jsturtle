@@ -303,16 +303,11 @@ function peano2(depth, size) {
 
 function draw() {
   var t = new TurtleGraphics({
-    canvasId: 'canvas',
-    turtleCanvasId: 'turtleCanvas'
+    screenId:   'screen',
+    width:      640,
+    height:     400,
+    border:     '2px solid #aaa',
+    turtleSize: 16
   });
   t.injectCommands(self);
-  //ht();
-  //setPos([maxX() * 0.25, maxY() * 0.9]);
-  //hilbert(5, 10);
-
-  //flower();
-  //shapes();
-  //stupidPolygonStar();
-  //stupidPolygon();
 }
