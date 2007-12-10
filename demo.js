@@ -202,13 +202,29 @@ function dragon(depth, size) {
   f(); x(depth);
 }
 
-function dragonFiller(depth, size) {
+function cross(fractal, depth, size) {
   var startPos = pos();
   var colors = [ 'red', 'blue', 'green', 'black' ];
   repeat(4, function(i) {
-    setPos(startPos); setPC(colors[i]); dragon(depth, size); rt(90);
+    setPos(startPos); setPC(colors[i]); fractal(depth, size); rt(90);
   });
 }
+
+function terDragon(depth, size) {
+  if (!size) size = 10;
+  var p = function() { right(120); };
+  var m = function() { left(120); };
+  var f = function(n) {
+    if (n <= 0) return;
+    if (n == 1) {
+      forward(size);
+    } else {
+      f(n - 1); p(); f(n - 1); m(); f(n - 1);
+    }
+  };
+  f(depth);
+}
+
 
 function sierpinski(depth, size) {
   if (!size) size = 10;
