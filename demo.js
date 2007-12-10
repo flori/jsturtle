@@ -202,7 +202,7 @@ function dragon(depth, size) {
   f(); x(depth);
 }
 
-function cross(fractal, depth, size) {
+function square(fractal, depth, size) {
   var startPos = pos();
   var colors = [ 'red', 'blue', 'green', 'black' ];
   repeat(4, function(i) {
