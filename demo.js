@@ -89,17 +89,18 @@ function flower() {
   leaves(6);
 }
 
+/* XXX broken
 function filledSquare(size) {
-  //fill(function () {
+  fill(function () {
     repeat(4, function() { fd(size); rt(90); });
-  //});
+  });
 }
 
 function pythagorasTree(depth, size) {
   if (!size) size = 10;
   var factor = 0.5 * Math.sqrt(2);
   var sq = function(n, s) {
-    if (n == 0) return;
+    if (n <= 0) return;
     filledSquare(s);
     lt(135);
     setPC('red'); sq(n - 1, s * factor);
@@ -112,6 +113,7 @@ function pythagorasTree(depth, size) {
   };
   sq(depth, size);
 }
+*/
 
 /*
  * L-Systems
@@ -122,10 +124,28 @@ function kochTriangle(depth, size) {
   var p = function() { right(60); };
   var m = function() { left(60); };
   var f = function(n) {
+    if (n <= 0) return;
     if (n == 1) {
       forward(size);
     } else {
       f(n - 1); p(); f(n - 1); m(); m(); f(n - 1); p(); f(n - 1);
+    }
+  };
+  f(depth);
+}
+
+function kochRandom(depth, size) {
+  if (!size) size = 10;
+  var p = function() { right(60); };
+  var m = function() { left(60); };
+  var f = function(n) {
+    if (n <= 0) return;
+    if (n == 1) {
+      forward(size);
+    } else if (random() < 0.5) {
+      f(n - 1); p(); f(n - 1); m(); m(); f(n - 1); p(); f(n - 1);
+    } else {
+      f(n - 1); m(); f(n - 1); p(); p(); f(n - 1); m(); f(n - 1);
     }
   };
   f(depth);
@@ -136,6 +156,7 @@ function kochSquare(depth, size) {
   var p = function() { right(90); };
   var m = function() { left(90); };
   var f = function(n) {
+    if (n <= 0) return;
     if (n == 1) {
       forward(size);
     } else {
@@ -155,11 +176,11 @@ function hilbert(depth, size) {
   var p = function() { right(90); };
   var m = function() { left(90); };
   var l = function(n) {
-    if (n == 0) return;
+    if (n <= 0) return;
     p(); r(n - 1); f(); m(); l(n - 1); f(); l(n - 1); m(); f(); r(n - 1); p();
   };
   var r = function(n) {
-    if (n == 0) return;
+    if (n <= 0) return;
     m(); l(n - 1); f(); p(); r(n - 1); f(); r(n - 1); p(); f(); l(n - 1); m();
   };
   l(depth);
@@ -171,11 +192,11 @@ function dragon(depth, size) {
   var p = function() { right(90); };
   var m = function() { left(90); };
   var x = function(n) {
-    if (n == 0) return;
+    if (n <= 0) return;
     x(n - 1); p(); y(n - 1); f(); p();
   };
   var y = function(n) {
-    if (n == 0) return;
+    if (n <= 0) return;
     m(); f(); x(n - 1); m(); y(n - 1); 
   };
   f(); x(depth);
@@ -195,6 +216,7 @@ function sierpinski(depth, size) {
   var p = function() { right(angle); };
   var m = function() { left(angle); };
   var a = function(n) {
+    if (n <= 0) return;
     if (n == 1) {
       forward(size);
     } else {
@@ -202,6 +224,7 @@ function sierpinski(depth, size) {
     }
   };
   var b = function(n) {
+    if (n <= 0) return;
     if (n == 1) {
       forward(size);
     } else {
@@ -216,6 +239,7 @@ function levyC(depth, size) {
   var p = function() { right(45); };
   var m = function() { left(45); };
   var f = function(n) {
+    if (n <= 0) return;
     if (n == 1) {
       forward(size);
     } else {
@@ -223,6 +247,42 @@ function levyC(depth, size) {
     }
   };
   f(depth);
+}
+
+function peano1(depth, size) {
+  if (!size) size = 10;
+  var p = function() { right(90); };
+  var m = function() { left(90); };
+  var f = function(n) {
+    if (n <= 0) return;
+    if (n == 1) {
+      forward(size);
+    } else {
+      f(n - 1); f(n - 1); p(); f(n - 1); p(); f(n - 1); p();
+      f(n - 1); f(n - 1); p(); f(n - 1); p(); f(n - 1); m(); f(n - 1);
+    }
+  };
+  f(depth);
+}
+
+function peano2(depth, size) {
+  if (!size) size = 10;
+  var f = function() { forward(size) };
+  var p = function() { right(90); };
+  var m = function() { left(90); };
+  var x = function(n) {
+    if (n <= 0) return;
+    x(n - 1); f(); y(n - 1); f(); x(n - 1); p(); f(); p(); y(n - 1); f();
+    x(n - 1); f(); y(n - 1); m(); f(); m(); x(n - 1); f(); y(n - 1); f();
+    x(n - 1); 
+  };
+  var y = function(n) {
+    if (n <= 0) return;
+    y(n - 1); f(); x(n - 1); f(); y(n - 1); m(); f(); m(); x(n - 1); f();
+    y(n - 1); f(); x(n - 1); p(); f(); p(); y(n - 1); f(); x(n - 1); f();
+    y(n - 1); 
+  };
+  x(depth);
 }
 
 function draw() {
