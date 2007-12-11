@@ -402,10 +402,10 @@ function TurtleGraphics(config) {
 
   that.clearScreen();
 
-  if (!config.isTurtle) {
+  if (!config.omitTurtle) {
     var turtle = new TurtleGraphics({
       screenId: config.screenId,
-      isTurtle: true,
+      omitTurtle: true,
       width: config.turtleSize || 14,
       height: config.turtleSize || 14,
       penColor: config.turtleColor || '#b00'
