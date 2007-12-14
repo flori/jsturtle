@@ -4,7 +4,39 @@
     <script type="text/javascript" src="turtle.js">
     <script type="text/javascript" src="demo.js">
   </head>
-  <body onload="draw();">
+  <body onload="init(); draw();">
     <div id="screen"></div>
+    <form id="menu">
+      <label for="depth">Depth</label>
+      <select name="depth" onchange="draw();">
+        <option>1</option>
+        <option>2</option>
+        <option selected="selected">3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+      </select>
+      <label for="demo">Demo</label>
+      <select name="demo" onchange="draw();">
+        <option value="cs(); setX(100); kochTriangle(depth, 5);">Koch (Triangle)</option>
+        <option value="cs(); setX(100); kochRandom(depth, 5);">Koch (Random)</option>
+        <option value="cs(); setX(100); kochSquare(depth, 5);">Koch (Square)</option>
+        <option value="cs(); setXY(150, 100); snowflake(kochTriangle, depth, 4);">Koch Snowflake (Triangle)</option>
+        <option value="cs(); setXY(150, 100); snowflake(kochRandom, depth, 4);">Koch Snowflake (Random)</option>
+        <option value="cs(); snowflake(kochSquare, depth, 2);">Koch Snowflake (Square)</option>
+        <option value="cs(); setXY(150, maxY() - 55); hilbert(depth, 10);">Hilbert</option>
+        <option value="cs(); dragon(depth, 10);">Dragon</option>
+        <option value="cs(); square(dragon, depth, 10);">Dragon Square</option>
+        <option value="cs(); terDragon(depth, 10);">Terdragon</option>
+        <option value="cs(); setXY(5, maxY() - 5); sierpinski(depth, 5);">Sierpinski</option>
+        <option value="cs(); levyC(depth, 10);">Levy C</option>
+        <option value="cs(); setX(5); peano1(depth, 10);">Peano 1</option>
+        <option value="cs(); setXY(5, maxY() - 5); peano2(depth, 5);">Peano 2</option>
+      </select>
+      <input type="submit" value="Redraw" onclick="draw(); return false;">
+    </form>
   </body>
 </html>

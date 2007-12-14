@@ -121,8 +121,8 @@ function pythagorasTree(depth, size) {
 
 function kochTriangle(depth, size) {
   if (!size) size = 10;
-  var p = function() { right(60); };
-  var m = function() { left(60); };
+  var p = function() { left(60); };
+  var m = function() { right(60); };
   var f = function(n) {
     if (n <= 0) return;
     if (n == 1) {
@@ -136,8 +136,8 @@ function kochTriangle(depth, size) {
 
 function kochRandom(depth, size) {
   if (!size) size = 10;
-  var p = function() { right(60); };
-  var m = function() { left(60); };
+  var p = function() { left(60); };
+  var m = function() { right(60); };
   var f = function(n) {
     if (n <= 0) return;
     if (n == 1) {
@@ -153,8 +153,8 @@ function kochRandom(depth, size) {
 
 function kochSquare(depth, size) {
   if (!size) size = 10;
-  var p = function() { right(90); };
-  var m = function() { left(90); };
+  var p = function() { left(90); };
+  var m = function() { right(90); };
   var f = function(n) {
     if (n <= 0) return;
     if (n == 1) {
@@ -167,14 +167,14 @@ function kochSquare(depth, size) {
 }
 
 function snowflake(fractal, depth, size) {
-  repeat(3, function() { fractal.apply(null, [ depth, size ]); lt(120); });
+  repeat(3, function() { fractal.apply(null, [ depth, size ]); right(120); });
 }
 
 function hilbert(depth, size) {
   if (!size) size = 10;
   var f = function() { forward(size); };
-  var p = function() { right(90); };
-  var m = function() { left(90); };
+  var p = function() { left(90); };
+  var m = function() { right(90); };
   var l = function(n) {
     if (n <= 0) return;
     p(); r(n - 1); f(); m(); l(n - 1); f(); l(n - 1); m(); f(); r(n - 1); p();
@@ -189,8 +189,8 @@ function hilbert(depth, size) {
 function dragon(depth, size) {
   if (!size) size = 10;
   var f = function() { forward(size); };
-  var p = function() { right(90); };
-  var m = function() { left(90); };
+  var p = function() { left(90); };
+  var m = function() { right(90); };
   var x = function(n) {
     if (n <= 0) return;
     x(n - 1); p(); y(n - 1); f(); p();
@@ -212,8 +212,8 @@ function square(fractal, depth, size) {
 
 function terDragon(depth, size) {
   if (!size) size = 10;
-  var p = function() { right(120); };
-  var m = function() { left(120); };
+  var p = function() { left(120); };
+  var m = function() { right(120); };
   var f = function(n) {
     if (n <= 0) return;
     if (n == 1) {
@@ -225,12 +225,11 @@ function terDragon(depth, size) {
   f(depth);
 }
 
-
 function sierpinski(depth, size) {
   if (!size) size = 10;
   angle = depth % 2 == 1 ? 60 : -60;
-  var p = function() { right(angle); };
-  var m = function() { left(angle); };
+  var p = function() { left(angle); };
+  var m = function() { right(angle); };
   var a = function(n) {
     if (n <= 0) return;
     if (n == 1) {
@@ -252,8 +251,8 @@ function sierpinski(depth, size) {
 
 function levyC(depth, size) {
   if (!size) size = 10;
-  var p = function() { right(45); };
-  var m = function() { left(45); };
+  var p = function() { left(45); };
+  var m = function() { right(45); };
   var f = function(n) {
     if (n <= 0) return;
     if (n == 1) {
@@ -267,8 +266,8 @@ function levyC(depth, size) {
 
 function peano1(depth, size) {
   if (!size) size = 10;
-  var p = function() { right(90); };
-  var m = function() { left(90); };
+  var p = function() { left(90); };
+  var m = function() { right(90); };
   var f = function(n) {
     if (n <= 0) return;
     if (n == 1) {
@@ -284,8 +283,8 @@ function peano1(depth, size) {
 function peano2(depth, size) {
   if (!size) size = 10;
   var f = function() { forward(size) };
-  var p = function() { right(90); };
-  var m = function() { left(90); };
+  var p = function() { left(90); };
+  var m = function() { right(90); };
   var x = function(n) {
     if (n <= 0) return;
     x(n - 1); f(); y(n - 1); f(); x(n - 1); p(); f(); p(); y(n - 1); f();
@@ -301,7 +300,7 @@ function peano2(depth, size) {
   x(depth);
 }
 
-function draw() {
+function init() {
   var t = new TurtleGraphics({
     screenId:   'screen',
     width:      640,
@@ -310,4 +309,9 @@ function draw() {
     turtleSize: 16
   });
   t.injectCommands(self);
+}
+
+function draw() {
+  var depth = document.getElementById('menu').depth.value;
+  eval(document.getElementById('menu').demo.value);
 }
