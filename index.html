@@ -1,14 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <title>Turtle Graphics in Javascript</title>
-    <script type="text/javascript" src="turtle.js">
-    <script type="text/javascript" src="demo.js">
+    <script type="text/javascript" src="turtle.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
   </head>
   <body onload="init(); draw();">
     <div id="screen"></div>
-    <form id="menu">
+    <form id="menu" action="#" style="margin-top: 10px">
       <label for="depth">Depth</label>
-      <select name="depth" onchange="draw();">
+      <select id="depth" onchange="draw();">
         <option>1</option>
         <option>2</option>
         <option selected="selected">3</option>
@@ -20,7 +23,7 @@
         <option>9</option>
       </select>
       <label for="demo">Demo</label>
-      <select name="demo" onchange="draw();">
+      <select id="demo" onchange="draw();">
         <option value="cs(); setX(100); kochTriangle(depth, 5);">Koch (Triangle)</option>
         <option value="cs(); setX(100); kochRandom(depth, 5);">Koch (Random)</option>
         <option value="cs(); setX(100); kochSquare(depth, 5);">Koch (Square)</option>
