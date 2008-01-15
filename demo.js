@@ -309,9 +309,14 @@ function createDepthOptions(from, to) {
   while (select.childNodes.length >  0) {
     select.removeChild(select.firstChild);
   }
+  var option = document.createElement("option");
+  option.innerHTML = '--- Please choose ---';
+  option.value = '';
+  select.appendChild(option);
   for (var i = from; i <= to; i++) {
     var option = document.createElement("option");
     option.innerHTML = i;
+    option.value = i;
     select.appendChild(option);
   }
 }
