@@ -272,6 +272,22 @@ function peano2(depth, size) {
   x(depth);
 }
 
+var stack = [];
+
+function fern(depth, size) {
+  if (!size) size = 10;
+  var f = function() { forward(size) };
+  var p = function() { left(8); };
+  var m = function() { right(8); };
+  var s = function() { stack.push(state()); }
+  var t = function() { setState(stack.pop()); }
+  var x = function(n) {
+    if (n <= 0) return;
+    f(); s(); p(); x(n - 1); t(); f(); s(); m(); x(n - 1); t(); p(); x(n - 1);
+  };
+  x(depth);
+}
+
 function init() {
   var t = new TurtleGraphics({
     screenId:   'screen',

@@ -228,6 +228,15 @@ function TurtleGraphics(config) {
   };
   commands.setH = commands.setHeading;
 
+  commands.setState = function(state) {
+    that.setPos(state[0]);
+    that.setHeading(state[1]);
+  };
+
+  commands.state = function() {
+    return [ that.pos(), that.heading() ];
+  };
+
   commands.home = function() {
     that.setPos(that.centrePos());
   };
