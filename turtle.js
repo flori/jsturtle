@@ -180,6 +180,11 @@ function TurtleGraphics(config) {
   };
   commands.setPC = commands.setPenColor;
 
+  commands.penColor = function() {
+    return that.ctx.strokeStyle;
+  };
+  commands.pc = commands.penColor;
+
   commands.setTurtleColor = function(color) {
     if (that.turtleTG === undefined) return;
     that.turtleTG.setPenColor(color);

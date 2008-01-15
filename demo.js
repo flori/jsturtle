@@ -274,16 +274,16 @@ function peano2(depth, size) {
 
 var stack = [];
 
-function fern(depth, size) {
+function plant(depth, size) {
   if (!size) size = 10;
-  var f = function() { forward(size) };
-  var p = function() { left(8); };
-  var m = function() { right(8); };
+  var f = function(n) { if (n == 1) { var c = pc(); setPC('#0a0'); lt(90); petal(size); rt(90); setPC(c); } else { forward(size) } };
+  var p = function() { left(13); };
+  var m = function() { right(13); };
   var s = function() { stack.push(state()); }
   var t = function() { setState(stack.pop()); }
   var x = function(n) {
     if (n <= 0) return;
-    f(); s(); p(); x(n - 1); t(); f(); s(); m(); x(n - 1); t(); p(); x(n - 1);
+    f(n); s(); p(); x(n - 1); t(); f(n); s(); m(); x(n - 1); t(); p(); x(n - 1);
   };
   x(depth);
 }
