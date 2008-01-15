@@ -276,7 +276,7 @@ var stack = [];
 
 function plant(depth, size) {
   if (!size) size = 10;
-  var f = function(n) { if (n == 1) { var c = pc(); setPC('#0a0'); lt(90); petal(size); rt(90); setPC(c); } else { forward(size) } };
+  var f = function(n) { if (n < 2) { var c = pc(); setPC('#0a0'); lt(90); petal(size); rt(90); setPC(c); } else { forward(size) } };
   var p = function() { left(13); };
   var m = function() { right(13); };
   var s = function() { stack.push(state()); }
