@@ -37,8 +37,6 @@ function stupidPolygon() {
 }
 
 function stupidPolygonStar() {
-  setBG('#020');
-  setPC('#0f0');
   repeat(360 / 60, function() {
     stupidPolygon();
     left(60);
@@ -88,32 +86,6 @@ function flower() {
   right(165);
   leaves(6);
 }
-
-/* XXX broken
-function filledSquare(size) {
-  fill(function () {
-    repeat(4, function() { fd(size); rt(90); });
-  });
-}
-
-function pythagorasTree(depth, size) {
-  if (!size) size = 10;
-  var factor = 0.5 * Math.sqrt(2);
-  var sq = function(n, s) {
-    if (n <= 0) return;
-    filledSquare(s);
-    lt(135);
-    setPC('red'); sq(n - 1, s * factor);
-    rt(135);
-    fd(s);
-    lt(135);
-    setPC('blue'); sq(n - 1, s * factor);
-    rt(135);
-    bk(s);
-  };
-  sq(depth, size);
-}
-*/
 
 /*
  * L-Systems
