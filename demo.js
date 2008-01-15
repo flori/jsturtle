@@ -315,3 +315,15 @@ function draw() {
   var depth = document.getElementById('menu').depth.value;
   eval(document.getElementById('menu').demo.value);
 }
+
+function createDepthOptions(from, to) {
+  var select = document.getElementById('depth');
+  while (select.childNodes.length >  0) {
+    select.removeChild(select.firstChild);
+  }
+  for (var i = from; i <= to; i++) {
+    var option = document.createElement("option");
+    option.innerHTML = i;
+    select.appendChild(option);
+  }
+}
