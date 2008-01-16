@@ -288,6 +288,13 @@ function plant(depth, size) {
   x(depth);
 }
 
+function confetti() {
+  repeat(300, function () {
+  setPC([ random(255), random(255), random(255) ]);
+  setXY(random(maxX()), random(maxY()));
+  fill(function() { arc(5, 360) }); });
+}
+
 function init() {
   var t = new TurtleGraphics({
     screenId:   'screen',

@@ -386,7 +386,13 @@ function TurtleGraphics(config) {
     that.fillBegin();
     block();
     that.fillEnd();
-  }
+  };
+
+  commands.allCommands = function() {
+    var result = [];
+    for (var name in that.commands) result.push(name);
+    return Array.sort(result);
+  };
 
   that.injectCommands = function(obj) {
     for (var name in that.commands) {
