@@ -391,7 +391,7 @@ function TurtleGraphics(config) {
   commands.allCommands = function() {
     var result = [];
     for (var name in that.commands) result.push(name);
-    return Array.sort(result);
+    return result.sort();
   };
 
   that.injectCommands = function(obj) {
