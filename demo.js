@@ -30,7 +30,7 @@ function stupidPolygon() {
   var startHeading = heading();
   forward(100); left(100);
   forward(100); left(100);
-  forward(100); 
+  forward(100);
   setH(towards(startPos));
   forward(distance(startPos));
   setH(startHeading);
@@ -70,19 +70,19 @@ function flower() {
   pu();
   forward(80);
   pd();
-  setPC('#0f0');;
+  setPC('#0f0');
   setPenSize(4);
   bk(250);
   pu();
   setPenSize(1);
   forward(250);
-  setPC('#f00');;
+  setPC('#f00');
   petals(20);
-  setPC('#fd0');;
+  setPC('#fd0');
   forward(40);
   fill(function () { arc(40, 360); });
   bk(290);
-  setPC('#0f0');;
+  setPC('#0f0');
   right(165);
   leaves(6);
 }
@@ -169,7 +169,7 @@ function dragon(depth, size) {
   };
   var y = function(n) {
     if (n <= 0) return;
-    m(); f(); x(n - 1); m(); y(n - 1); 
+    m(); f(); x(n - 1); m(); y(n - 1);
   };
   f(); x(depth);
 }
@@ -207,7 +207,7 @@ function sierpinski(depth, size) {
     if (n == 1) {
       forward(size);
     } else {
-      b(n - 1); m(); a(n - 1); m(); b(n - 1)
+      b(n - 1); m(); a(n - 1); m(); b(n - 1);
     }
   };
   var b = function(n) {
@@ -215,7 +215,7 @@ function sierpinski(depth, size) {
     if (n == 1) {
       forward(size);
     } else {
-      a(n - 1); p(); b(n - 1); p(); a(n - 1)
+      a(n - 1); p(); b(n - 1); p(); a(n - 1);
     }
   };
   a(depth);
@@ -254,20 +254,20 @@ function peano1(depth, size) {
 
 function peano2(depth, size) {
   if (!size) size = 10;
-  var f = function() { forward(size) };
+  var f = function() { forward(size); };
   var p = function() { left(90); };
   var m = function() { right(90); };
   var x = function(n) {
     if (n <= 0) return;
     x(n - 1); f(); y(n - 1); f(); x(n - 1); p(); f(); p(); y(n - 1); f();
     x(n - 1); f(); y(n - 1); m(); f(); m(); x(n - 1); f(); y(n - 1); f();
-    x(n - 1); 
+    x(n - 1);
   };
   var y = function(n) {
     if (n <= 0) return;
     y(n - 1); f(); x(n - 1); f(); y(n - 1); m(); f(); m(); x(n - 1); f();
     y(n - 1); f(); x(n - 1); p(); f(); p(); y(n - 1); f(); x(n - 1); f();
-    y(n - 1); 
+    y(n - 1);
   };
   x(depth);
 }
@@ -276,11 +276,11 @@ var stack = [];
 
 function plant(depth, size) {
   if (!size) size = 10;
-  var f = function(n) { if (n < 2) { var c = pc(); setPC('#0a0'); lt(90); petal(size); rt(90); setPC(c); } else { forward(size) } };
+  var f = function(n) { if (n < 2) { var c = pc(); setPC('#0a0'); lt(90); petal(size); rt(90); setPC(c); } else { forward(size); } };
   var p = function() { left(13); };
   var m = function() { right(13); };
-  var s = function() { stack.push(state()); }
-  var t = function() { setState(stack.pop()); }
+  var s = function() { stack.push(state()); };
+  var t = function() { setState(stack.pop()); };
   var x = function(n) {
     if (n <= 0) return;
     f(n); s(); p(); x(n - 1); t(); f(n); s(); m(); x(n - 1); t(); p(); x(n - 1);
@@ -292,7 +292,7 @@ function confetti() {
   repeat(300, function () {
   setPC([ random(255), random(255), random(255) ]);
   setXY(random(maxX()), random(maxY()));
-  fill(function() { arc(5, 360) }); });
+  fill(function() { arc(5, 360); }); });
 }
 
 function init() {
@@ -321,7 +321,7 @@ function createDepthOptions(from, to) {
   option.value = '';
   select.appendChild(option);
   for (var i = from; i <= to; i++) {
-    var option = document.createElement("option");
+    option = document.createElement("option");
     option.innerHTML = i;
     option.value = i;
     select.appendChild(option);

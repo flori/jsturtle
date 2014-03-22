@@ -135,7 +135,7 @@ function TurtleGraphics(config) {
     that.turtleTG.canvas.style.zIndex = 1;
     that.turtleTG.rotateTurtle(that);
     that.turtleTG.moveTurtle(that);
-  }
+  };
   commands.st = commands.showTurtle;
 
   commands.isTurtleShown = function() {
@@ -146,7 +146,7 @@ function TurtleGraphics(config) {
     that.hidden = true;
     if (that.turtleTG === undefined) return;
     that.turtleTG.canvas.style.zIndex = -1;
-  }
+  };
   commands.ht = commands.hideTurtle;
 
   commands.isTurtleHidden = function() {
@@ -164,12 +164,12 @@ function TurtleGraphics(config) {
 
   commands.penDown = function() {
     that.drawing = true;
-  }
+  };
   commands.pd = commands.penDown;
 
   commands.isPenDown = function() {
     return that.drawing;
-  }
+  };
 
   // penPaint, penErase, penRevert
 
@@ -190,7 +190,7 @@ function TurtleGraphics(config) {
     that.turtleTG.setPenColor(color);
     that.turtleTG.clearScreen();
     that.turtleTG.drawTurtle();
-  }
+  };
 
   commands.setBackground = function(color) {
     color = that.prepareColor(color);
@@ -209,7 +209,7 @@ function TurtleGraphics(config) {
   // 'butt', 'round', 'square'
   commands.setLineCap = function(type) {
     that.ctx.lineCap = type;
-  }
+  };
 
   commands.forward = function(length) {
     var x = length * Math.cos(that.angleAsRad());
@@ -286,7 +286,7 @@ function TurtleGraphics(config) {
 
   commands.xCor = function() {
     return that.posX;
-  }
+  };
 
   commands.yCor = function() {
     return that.posY;
@@ -351,9 +351,9 @@ function TurtleGraphics(config) {
     } else if (start < end) {
       return start + Math.floor(Math.random() * (1 + Math.floor(end) - Math.floor(start)));
     } else {
-      throw("start has to be < end")
+      throw("start has to be < end");
     }
-  }
+  };
 
   commands.repeat = function(n, block) {
     for (var i = 0; i < n; i++) block(i);
@@ -362,7 +362,7 @@ function TurtleGraphics(config) {
   commands.forever = function(block) {
     var i = 0;
     for (;; i++) block(i);
-  }
+  };
 
   commands.show = function() {
     if (console === undefined) return;
