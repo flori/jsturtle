@@ -298,8 +298,8 @@ function confetti() {
 function init() {
   var t = new TurtleGraphics({
     screenId:   'screen',
-    width:      640,
-    height:     400,
+    width:      800,
+    height:     600,
     border:     '2px solid #aaa',
     turtleSize: 16
   });
