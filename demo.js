@@ -308,7 +308,22 @@ function init() {
 
 function draw() {
   var depth = document.getElementById('menu').depth.value;
-  eval(document.getElementById('menu').demo.value);
+	var demo = document.getElementById('menu').demo.value;
+	var demoFunctionName = demo.match(/.*; ([^\(]+).*/, '\1')[1];
+	displaySourceCode(demoFunctionName);
+  eval(demo);
+}
+
+function displaySourceCode(functionName) {
+  var func = window[functionName];
+  if (func) {
+    var source = func.toString();
+
+    document.getElementById('source-code').textContent = source;
+		Prism.highlightAll();
+  } else {
+    document.getElementById('source-code').textContent = '';
+  }
 }
 
 function createDepthOptions(from, to) {

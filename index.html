@@ -6,6 +6,13 @@
     <title>Turtle Graphics in Javascript</title>
     <script type="text/javascript" src="turtle.js"></script>
     <script type="text/javascript" src="demo.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <style>
+    #source-code {
+      font-size: 14pt;
+    }
+    </style>
   </head>
   <body onload="init(); draw();">
     <div id="screen"></div>
@@ -38,10 +45,11 @@
       <label for="depth">Depth</label>
       <select id="depth" onchange="draw();"></select>
     </form>
-		<p>To interact with your turtle using browser developer tools, use the built-in
-		JavaScript console in Brave, Chrome, Safari, and Firefox. Call
-		<i>allCommands()</i> to get a list of all possible commands.</p>
+    <p>To interact with your turtle using browser developer tools, use the built-in
+    JavaScript console in Brave, Chrome, Safari, and Firefox. Call
+    <i>allCommands()</i> to get a list of all possible commands.</p>
     <p>Here is the <a href="http://github.com/flori/jsturtle">github
       repository of jsturtle</a>.</p>
+    <pre style="width: 800px;"><code id="source-code" class="language-javascript"/></pre>
   </body>
 </html>
