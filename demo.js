@@ -309,21 +309,39 @@ function init() {
 function draw() {
   var depth = document.getElementById('menu').depth.value;
 	var demo = document.getElementById('menu').demo.value;
-	var demoFunctionName = demo.match(/.*; ([^\(]+).*/, '\1')[1];
-	displaySourceCode(demoFunctionName);
+	if (!demo) {
+		return
+	}
+	var functionNames = extractFunctionNames(demo);
+	displaySourceCode(functionNames);
   eval(demo);
 }
 
-function displaySourceCode(functionName) {
-  var func = window[functionName];
-  if (func) {
-    var source = func.toString();
+function extractFunctionNames(value) {
+	var match = value.match(/; (\[.*?\])/);
+	if (match) {
+		return JSON.parse(match[1]);
+	} else {
+		var functionName = value.match(/.*; ([^\(]+).*/)[1];
+		return [functionName];
+	}
+}
 
-    document.getElementById('source-code').textContent = source;
+function displaySourceCode(functionNames) {
+	document.getElementById('source-code').textContent = '';
+	for (i = 0; i < functionNames.length; i++) {
+		var func = window[functionNames[i]];
+		if (!func) {
+			continue;
+		}
+		var source = func.toString();
+		if (!document.getElementById('source-code').textContent) {
+			document.getElementById('source-code').textContent = source;
+		} else {
+			document.getElementById('source-code').textContent += "\n\n" + source;
+		}
 		Prism.highlightAll();
-  } else {
-    document.getElementById('source-code').textContent = '';
-  }
+	}
 }
 
 function createDepthOptions(from, to) {
